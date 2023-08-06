@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+ 
+.container{
+	margin-top: 100px;
+	
+}
+
+#boardform{
+	padding : 20px;
+	background-color: white;
+	border : 2px solid gray;
+	margin: 0 auto 50px auto;
+	max-width :1000px;
+}
+
+.form-control{width : 95%;
+justify-content : center;
+
+}
+
+h2{font-size : 1.5rem; text-align: center;  color:rgb(0,173,238)!important; ;}
+
+
+label{font-weight : bold}
+
+
+img{width : 20px;}
+
+input{width : 80%;
+		height : 36px!important;}
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+.btn-group2{
+	margin-top:10px;	
+  text-align :center;
+}
+
+
+#board_notice {
+  margin-top:2px
+}

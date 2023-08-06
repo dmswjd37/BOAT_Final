@@ -1,0 +1,16 @@
+
+
+select * from Filecomm;
+
+select * from file_board;
+
+select * from todolist;
+
+select * from member;
+
+select * from boat_calendar;
+
+select * from BOAT_ATTENDANCE;
+
+
+ select * from FILEBO_FAV;

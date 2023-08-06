@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "my",
+      "type": "com.boat.domain.MySaveFolder",
+      "sourceType": "com.boat.domain.MySaveFolder"
+    }
+  ],
+  "properties": [
+    {
+      "name": "my.savefolder",
+      "type": "java.lang.String",
+      "sourceType": "com.boat.domain.MySaveFolder"
+    },
+    {
+      "name": "my.sendfile",
+      "type": "java.lang.String",
+      "sourceType": "com.boat.domain.MySaveFolder"
+    }
+  ],
+  "hints": []
+}

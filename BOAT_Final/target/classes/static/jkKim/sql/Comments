@@ -1,0 +1,48 @@
+drop table comments cascade constraints purge;
+
+create table comments(
+num number primary key,
+EMPNO varchar2(30) references member(empno) ON DELETE CASCADE,
+content varchar2(200),
+reg_date date,
+board_num number references board(board_num) on delete cascade);
+
+-- comment_board_num comm 테이블이 참조하는 보드 글 번호
+-- comment_re_lev  원문이면0 답글이면 1
+-- comment_re_seq원문이면 0, 1레벨이면 1레벨시퀀스+1
+-- comment_re_ref  원문은 자신 글번호, 답글이면 원문 글번호
+--게시판 글이 삭제되면 참조하는 댓글도 삭제됨
+
+drop sequence com_seq;
+
+create sequence com_seq;
+
+delete comm;
+
+select * from comm;
+
+
+
+select F_C_NUM, FILE_COMMENT.F_C_ID, F_CONTENT, F_COMMENT_DATE, F_COMMENT_RE_LEV, 
+				   F_COMMENT_RE_SEQ, F_COMMENT_RE_REF 
+				   from FILE_COMMENT join member 
+				   on FILE_COMMENT.F_C_ID = member.empno 
+				   where F_COMMENT_NUM = 14
+				   order by F_COMMENT_RE_REF 
+                   asc,
+                    F_COMMENT_RE_SEQ asc;
+
+
+
+
+
+
+
+                     select FILE_C_NUM, FILE_COMMENT.FILE_C_ID, FILE_CONTENT,   
+                     FILE_COMMENT_DATE, FILE_COMMENT_RE_LEV,member.PROFILE_FILE PROFILE ,
+                             FILE_COMMENT_RE_SEQ, FILE_COMMENT_RE_REF       
+                               from FILE_COMMENT join member       
+                                 on FILE_COMMENT.FILE_C_ID = member.empno   
+                                       where FILE_BO_NUM = 14      
+                                          order by FILE_BO_NUM                                          asc,                                     
+                                                 FILE_COMMENT_RE_SEQ asc

@@ -1,0 +1,17 @@
+drop table TODOLIST cascade constraints purge;
+drop table MEMBER cascade constraints purge;
+
+create sequence todo_seq nocache;
+
+create table TODOLIST (
+	NUM VARCHAR2(12),
+	EMPNO VARCHAR2(12) references member(empno) ON DELETE CASCADE,
+	T_CONTENT VARCHAR2(200),
+	START_DATE VARCHAR2(15),
+	END_DATE VARCHAR2(15),
+	REG_DATE  DATE DEFAULT SYSDATE,	
+	DEPT VARCHAR2(15),
+	state number(5)
+);
+
+

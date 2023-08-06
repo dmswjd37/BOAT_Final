@@ -1,0 +1,127 @@
+#form-container {
+	padding: 70px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.other {
+	margin-top: 3.5rem;
+	margin-bottom: 2.5rem;
+}
+
+#form-inner-container {
+    background-color: white;
+    max-width: 70%;
+    border-radius: 8px;
+}
+
+#sign-up-container {
+    width: 400px;
+    display: inline-block;
+    position: relative;
+}
+
+#sign-in-container {
+    padding: 60px 80px;
+    width: 320px;
+    display: inline-block;
+}
+
+form input:not(form div input) {
+    height: 57px;
+    margin-top: 10px;
+}
+
+#sign-up-container h3 {
+    font-size: 35px;
+    font-weight: 500;
+    text-align:center;
+}
+
+#sign-up-container h4 {
+    font-size: 20px;
+    font-weight: 500;
+    text-align:center;
+    margin-bottom: 60px;
+}
+
+label {
+    font-weight: bold;
+}
+
+#form-controls button {
+    font-size: 120%;
+    margin-top: 40px;
+    width: 100%;
+    font-weight: bold;
+    
+}
+
+/* disabled 의사 클래스를 이용해 비활성화 상태의 버튼 스타일 설정 */
+#form-controls button:disabled {
+  color: #ccc;
+  background-color: #f2f4f7;
+  border: none;
+}
+
+@media(max-width:1124px) {
+    #form-inner-container{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 684px) {
+    #form-controls {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+}
+
+.bodylogo {
+	padding-top: 70px;
+	font-size: 4rem;
+}
+
+.btn-naver {
+    background: url(../image/naver_login2x.png) no-repeat #01c73c;
+    background-size: 17px;
+    background-position: 17px 50%;
+    border-color: #01c73c;
+    color: #fff;
+    border-radius: 3px;
+    height:50px;
+    padding-top: 13px;
+    padding-bottom: 8px;
+}
+.btn-naver:hover,.btn-naver:focus {
+    background: url(../image/naver_login2x.png) no-repeat #00bb38;
+    background-size: 17px;
+    background-position: 17px 50%;
+	border-color : #00bb38;
+	color: #fff;
+}
+
+.btn-google {
+    background: url(../image/google_icon.png) no-repeat ;
+    background-size: 17px;
+    background-position: 17px 50%;
+    border-color: #01c73c;
+    color: black;
+    border-radius: 3px;
+    height:50px;
+    padding-top: 13px;
+    padding-bottom: 8px;
+}
+.btn-google:hover, .btn-google:focus {
+    background: url(../image/google_icon.png) no-repeat #fbfbfb;
+    background-size: 17px;
+    background-position: 17px 50%;
+	border-color : #00bb38;
+    color: black;
+}
+
+

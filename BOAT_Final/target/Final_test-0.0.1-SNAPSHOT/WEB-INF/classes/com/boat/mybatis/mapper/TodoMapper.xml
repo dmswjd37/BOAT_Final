@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.boat.mybatis.mapper.TodoMapper">
+  
+  <delete id="DeleteTodo">
+  delete from todolist where num = #{num}
+  </delete>
+		<select id="getTodo" resultType = "Todo">
+		select * from TODOLIST where num = #{num}
+		</select>
+		
+		<insert id="Todoinsert">
+		insert into TODOLIST (NUM,EMPNO, T_CONTENT,START_DATE,END_DATE,DEPT,state) 
+		values(todo_seq.nextval, #{EMPNO},#{T_CONTENT},#{START_DATE},#{END_DATE},#{DEPT},0)
+		</insert>
+		  
+		 <select id ="myTodolist" resultType="Todo">
+		 select * from TODOLIST
+		 where empno = #{empno}
+		 order by reg_date desc
+		 </select> 
+		  
+		 <select id="getDept" resultType="string">
+		 select dept from member 
+		 where empno = #{empno}
+		 </select>
+		 
+		 <select id="myDeptTodo" resultMap ="deptTodomember" >
+		<!-- 부서별 Todo값 가져오기 -->
+		
+		 
+					 
+			 SELECT T.*, M.*
+			FROM member M
+			RIGHT OUTER JOIN todolist T
+			ON T.empno = M.empno AND T.dept = M.dept
+			WHERE M.dept = #{DEPT}
+			and M.empno !=#{EMPNO}
+			ORDER BY M.empno
+			
+		 </select>
+
+		 <resultMap id="deptTodomember" type="member2">
+		 		<id property="EMPNO" column="EMPNO"/>
+			    <result property="NAME" column="NAME"/>
+			    <result property="DEPT" column="DEPT"/>
+			    <result property="JOB" column="JOB"/>
+			    <result property="PROFILE_FILE" column="PROFILE_FILE"/>
+			    <result property="PROFILE_IMG" column="PROFILE_IMG"/>
+		 	
+			<collection property="Todo" ofType ="Todo"> 
+				<result property="state" column="state"/>
+				<result property="T_CONTENT" column="T_CONTENT"/>
+			 	<result property="START_DATE" column="START_DATE"/>
+			 	<result property="END_DATE" column="END_DATE"/>
+			 	<result property="REG_DATE" column="REG_DATE"/>
+			 	<result property="NUM" column="NUM"/>
+			  </collection>
+		 </resultMap>
+		 
+	<!-- 	 <resultMap id="deptTodomember" type="com.boat.domain.Todo">
+		 	<result property="T_CONTENT" column="T_CONTENT"/>
+		 	<result property="START_DATE" column="START_DATE"/>
+		 	<result property="END_DATE" column="END_DATE"/>
+		 	<result property="REG_DATE" column="REG_DATE"/>
+		 	<result property="NUM" column="NUM"/>
+		 	
+			
+		 	  <association property="member" javaType="Member">
+			    <id property="EMPNO" column="EMPNO"/>
+			    <result property="NAME" column="NAME"/>
+			    <result property="DEPT" column="DEPT"/>
+			    <result property="JOB" column="JOB"/>
+			    <result property="PROFILE_FILE" column="PROFILE_FILE"/>
+			    <result property="PROFILE_IMG" column="PROFILE_IMG"/>
+ 			 </association>
+		 </resultMap> -->
+		 
+		 <update id="myTodoupdate">
+		 update todolist set END_DATE=#{END_DATE}
+		 <if test="T_CONTENT !=null and T_CONTENT =''">
+		 and T_CONTENT=#{T_CONTENT}
+		 </if>
+		 where num= #{num}
+		 </update>
+		 
+		 <update id="todoDone">
+		 update todolist set state = 1
+		 where num = #{num}
+		 </update>
+		 
+		 <update id="updateTodo">
+		 update todolist set END_DATE = #{END_DATE}
+		 where num = #{NUM}
+		 </update>
+		 
+		 
+  </mapper>

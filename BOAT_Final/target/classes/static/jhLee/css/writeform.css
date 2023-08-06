@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+ 
+.container{
+	margin-top: 50px;
+	max-width :900px;
+}
+body > div.container > form
+{
+	min-height : 700px;
+	padding : 20px;
+	background-color: white;
+	border : 2px solid gray;
+	margin-bottom: 200px;
+}
+/*input태그*/
+
+
+.form-group{
+	
+	margin:17px;
+}
+.form-control{
+	width : 95%;
+justify-content : center;
+margin : 10px auto;
+/* height : 36px!important; */
+}
+
+h1{
+ text-align: center;  color:rgb(0,173,238)!important; ;}
+
+
+label{font-weight : 900;
+	color : black;}
+
+#upfile,#upfile2{display : none}
+
+img{width : 20px;}
+
+input{width : 80%;
+		height : 36px!important;}
+		
+.writer{
+    margin-left: 20px;
+    width:45%;
+}
+#dropdownMenuLink{
+	color : white!important;
+}
+.deptwriter{
+	padding : 0;
+	background-color : white!important;
+	border:none;
+}
+
+.content label{
+	margin-bottom: 10px;
+	
+}
+
+.file1 {
+	margin-top: 10px;
+}
+.form-control .btn-group{
+	
+    margin-right: 20px;
+    width : 20%;
+    float: left;
+}
+#deptdrop{
+display : inline;
+	
+}
+#FILE_NAME{
+	display : inline;
+}
+
+.btn-group2{
+  text-align :center;
+}
+.btn-secondary {
+	background-color: rgb(0, 173, 238) !important;
+	border: rgb(0, 173, 238) !important;;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+.file2{
+	display : none;
+}

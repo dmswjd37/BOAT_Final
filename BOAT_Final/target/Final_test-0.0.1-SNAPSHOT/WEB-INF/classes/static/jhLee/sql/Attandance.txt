@@ -1,0 +1,22 @@
+drop table BOAT_ATTENDANCE cascade constraints purge;
+
+table 변경 _ 230331_dept 추가
+alter table boat_attendance add DEPT varchar2(10);
+alter table boat_attendance add NAME varchar2(15);
+alter table boat_attendance add WORK_TIME varchar2(20);
+
+create table BOAT_ATTENDANCE (
+	EMPNO VARCHAR2(12),
+	CONTENT VARCHAR2(200),
+	on_time varchar2(20),
+	off_time varchar2(20),
+	OUT_time varchar2(20),
+	dept varchar2(10),
+	reg_date DATE DEFAULT SYSDATE,
+	NAME VARCHAR2(15),
+	WORK_TIME varchar2(20)
+);
+
+delete BOAT_ATTENDANCE 
+where reg_date = TO_CHAR(SYSDATE, 'YYYYMMDD')
+and empno = '2330001';

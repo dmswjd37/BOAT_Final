@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.boat.mybatis.mapper.FileComMapper">
+  
+<insert id = "">
+<!-- <selectKey>
+ <![CDATA[
+update FILE_COMMENT
+set FILE_COMMENT_RE_SEQ = FILE_COMMENT_RE_SEQ+1
+where FILE_COMMENT_RE_SEQ = #{}
+and FILE_COMMENT_RE_SEQ > #{}  ]]>
+</selectKey> -->
+
+
+ insert into FILE_COMMENT (FILE_C_NUM,FILE_C_ID,FILE_CONTENT,FILE_COMMENT_DATE,FILE_BO_NUM,
+	FILE_COMMENT_RE_LEV,FILE_COMMENT_RE_SEQ,FILE_COMMENT_RE_REF)
+					values(filecom.nextval,#{FILE_C_ID},#{FILE_CONTENT},sysdate,#{FILE_BO_NUM},
+					#{FILE_COMMENT_RE_LEV},#{FILE_COMMENT_RE_SEQ},filecom.nextval)
+</insert>
+
+  
+  
+	<select id="getListCount" resultType="int">
+		select count(*) from FILE_COMMENT
+		where FILE_BO_NUM =#{FILE_BO_NUM}
+	</select>
+	
+  <select id = "getCommentList" resultType="Filecomm" parameterType="java.util.Map">
+	
+	select FILE_C_NUM, FILE_COMMENT.FILE_C_ID, FILE_CONTENT,FILE_C_NAME,FILE_C_DEPT,
+	FILE_COMMENT_DATE, FILE_COMMENT_RE_LEV,member.PROFILE_FILE PROFILE, 
+				   FILE_COMMENT_RE_SEQ, FILE_COMMENT_RE_REF 
+				   from FILE_COMMENT join member 
+				   on FILE_COMMENT.FILE_C_ID = member.empno 
+				   where FILE_BO_NUM = #{FILE_BO_NUM} 
+				   order by FILE_COMMENT_RE_REF 
+                   <if test='state=="1"'>
+                   asc,
+                   </if>
+                   <if test='state=="2"'>
+                   desc,
+                   </if>  
+                    FILE_COMMENT_RE_SEQ asc
+  
+  </select>
+  
+  			 
+  <insert id = "commentInsert" parameterType = "Filecomm">
+	 insert into FILE_COMMENT (FILE_C_NUM,FILE_C_ID,FILE_CONTENT,FILE_COMMENT_DATE,FILE_BO_NUM,
+	FILE_COMMENT_RE_LEV,FILE_COMMENT_RE_SEQ,FILE_COMMENT_RE_REF,FILE_C_NAME,FILE_C_DEPT)
+					values(filecom.nextval,#{FILE_C_ID},#{FILE_CONTENT},sysdate,#{FILE_BO_NUM},
+					#{FILE_COMMENT_RE_LEV},#{FILE_COMMENT_RE_SEQ},filecom.nextval,#{FILE_C_NAME},#{FILE_C_DEPT})
+  </insert>
+  
+ 
+
+  <delete id="commentsDelete" parameterType ="int">
+  delete from FILE_COMMENT where FILE_C_NUM=#{num}
+  </delete>
+  
+  <update id="commentsUpdate">
+  update FILE_COMMENT set FILE_CONTENT= #{FILE_CONTENT}
+						where FILE_C_NUM =#{FILE_C_NUM}
+  
+  </update>
+  
+  <update id="commentreplyUpdate">
+update FILE_COMMENT set FILE_COMMENT_RE_SEQ = FILE_COMMENT_RE_SEQ+1
+where FILE_COMMENT_RE_SEQ = #{FILE_COMMENT_RE_SEQ}
+and FILE_COMMENT_RE_SEQ > #{FILE_COMMENT_RE_SEQ}
+  </update>
+  
+  <insert id="commentsreply">
+  
+  insert into FILE_COMMENT (FILE_C_NUM,FILE_C_ID,FILE_CONTENT,FILE_COMMENT_DATE,FILE_BO_NUM,
+	FILE_COMMENT_RE_LEV,FILE_COMMENT_RE_SEQ,FILE_COMMENT_RE_REF,FILE_C_NAME,FILE_C_DEPT)
+					values(filecom.nextval,#{FILE_C_ID},#{FILE_CONTENT},sysdate,#{FILE_BO_NUM},
+					#{FILE_COMMENT_RE_LEV},#{FILE_COMMENT_RE_SEQ},#{FILE_COMMENT_RE_REF},#{FILE_C_NAME},#{FILE_C_DEPT})
+  </insert>
+  
+ </mapper>

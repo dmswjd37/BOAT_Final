@@ -1,0 +1,97 @@
+
+@charset "utf-8";
+
+  #drag_wrap {
+  float : left;
+  margin-right : 20px;
+    left: 20px;
+    width: 100px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  
+  }
+  
+  /* 현재 없는 선택자 */
+
+ 
+  
+  
+  #external-events .fc-event {
+    margin: 3px 0;
+    cursor: move;
+  }
+ 
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+ 
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
+ /* 현재 없는 선택자 */
+
+
+/* 달력 감싸기 (드래그이벤트 포함)  */
+.calhr{
+	margin-left: 100px;
+}
+
+  #cal_wrap {
+  padding-top : 40px;
+  margin-left: 100px;
+  margin-bottom : 200px;
+  max-width: 1300px; 
+  }
+ 
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+ /* 현재 없는 선택자
+  #cal_save{
+  width : 120px; height : 40px; background-color : blue; color : white; 
+  font-size:17px; cursor:pointer;
+  border : none;
+  margin-bottom: 50px;
+}
+ */
+ /* 팀별일정 셀렉트바 */
+#calDept
+{width : 50%;
+margin :0 auto;}
+a
+{text-decoration: none;
+color :rgb(86 78 78 / 81%);
+}
+ /* 
+.fc-day .fc-day-sat .fc-day-future .fc-daygrid-day { color:#0000FF; }    토요일 */
+/*.fc-day .fc-day-sun .fc-day-future .fc-daygrid-day { color:#FF0000; }     일요일 */
+.fc-day-sat> a 
+{ color:#0000FF!important;}     /* 토요일 */
+.fc-day-sun  { color:#FF0000; }    /* 일요일 */
+
+a
+{text-decoration: none;
+color : none}
+
+.popover {
+  max-width: 500px;
+  width: auto;
+}
+
+.popover-header {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #343a40;
+  color: #fff;
+  padding: 10px;
+}
+
+.popover-body {
+  padding: 10px;
+}

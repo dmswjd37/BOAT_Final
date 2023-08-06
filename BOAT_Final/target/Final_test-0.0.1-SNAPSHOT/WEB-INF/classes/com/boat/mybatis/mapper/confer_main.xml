@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.boat.mybatis.mapper.ConferenceReservationMapper">
+  
+   <select id = "getcal" resultType="ConferenceReservation" parameterType="java.util.Map">
+     select * from CONFER_MAIN
+     <where>
+      <if test="tab != null and tab != ''">
+      rental = #{RENTAL}
+      </if>
+      </where>
+  </select>
+  
+
+  <insert id = "insert1" parameterType = "ConferenceReservation">
+     insert into CONFER_MAIN
+     (id,rental,start_time,end_time,content,start_t,end_t,abc)
+     values
+     (#{ID},#{RENTAL},#{START_TIME},#{END_TIME},#{CONTENT},#{START_T},#{END_T},#{ABC})
+  
+  
+   </insert>
+  
+   <select id = "admit" resultType="ConferenceReservation" parameterType="java.util.Map">
+     select *
+  from (
+    select rownum as rnum, abc.*
+    from (
+      select *
+      from CONFER_MAIN
+      <if test="tab != null and tab != ''">
+        where RENTAL = #{tab}
+      </if>
+      order by status asc
+    ) abc
+  ) 
+  where rnum between #{startrow} and #{endrow}
+     
+  </select>
+  
+  
+  <select id="listcount" resultType="int">
+		select count(*) from CONFER_MAIN
+		<if test="tab != null and tab != ''">
+		 where RENTAL = #{tab}
+		 </if>
+	</select>
+  
+  <update id="admit_pro" >
+  update CONFER_MAIN 
+  	set STATUS = 1 
+  	where ID = #{ID} and 
+  		  RENTAL = #{RENTAL} and  
+  		  START_TIME = #{START_TIME} and  
+  		  END_TIME = #{END_TIME} and
+  		  ABC = #{ABC}
+  
+  </update>
+  
+  <select id="check_pro" resultType="int">
+  SELECT COUNT(*) FROM CONFER_MAIN
+  WHERE STATUS = 1 AND RENTAL = #{RENTAL} AND
+        ((START_TIME BETWEEN #{START_TIME} AND #{END_TIME}) OR
+         (END_TIME BETWEEN #{START_TIME} AND #{END_TIME}) OR
+         (#{START_TIME} BETWEEN START_TIME AND END_TIME) OR
+         (#{END_TIME} BETWEEN START_TIME AND END_TIME))
+</select>
+  
+  
+  
+    <update id="reject_pro" >
+  update CONFER_MAIN 
+  	set MEMO = #{MEMO} , STATUS = 2 
+  	where ID = #{ID} and 
+  		  RENTAL = #{RENTAL} and  
+  		  START_TIME = #{START_TIME} and  
+  		  END_TIME = #{END_TIME} and
+  		  ABC = #{ABC}
+  
+  </update>
+  
+  
+  
+  
+  </mapper>

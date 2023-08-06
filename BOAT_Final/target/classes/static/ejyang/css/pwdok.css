@@ -1,0 +1,114 @@
+#form-container {
+	padding: 70px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#form-inner-container {
+    background-color: white;
+    max-width: 70%;
+    border-radius: 8px;
+}
+
+#sign-up-container {
+    width: 400px;
+    display: inline-block;
+    position: relative;
+}
+
+form input:focus {
+    border-color: #009CFF;
+}
+
+#sign-up-container h3 {
+    font-size: 40px;
+    font-weight: 500;
+    text-align:center;
+}
+
+.brick-idpw_2022__desc {
+    padding-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #6f7070;
+    font-weight: bold;
+    padding-bottom: 60px;
+}
+
+.brick-idpw_2022__desc .w-blue-text {
+    color: #3090d6 !important;
+}
+
+::placeholder {
+    color: #C0C7DB;
+    font-size: 1rem;
+    letter-spacing: 1.2px;
+}
+
+@media(max-width:1438px) {
+    lottie-player {
+        width: 300px!important;
+    }
+}
+
+@media(max-width:1124px) {
+    #form-inner-container{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 684px) {
+    #form-controls {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+._input {
+	font-size: 16px;
+    height: 60px;
+    width: 100%;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+#form-controls {
+    margin-bottom: 20px;
+}
+
+#form-controls button:hover {
+    cursor: pointer;
+}
+
+.fa-eye:before{content:"\f06e"}.fa-eye-slash:before{content:"\f070"}
+
+.first_icon .fa-eye, .first_icon .fa-eye-slash{
+    position: absolute;
+    left: 90%;
+    top: 220px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(184, 184, 184);
+}
+
+.second_icon .fa-eye, .second_icon .fa-eye-slash{
+    position: absolute;
+    left: 90%;
+    top: 335px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(184, 184, 184);
+}
+
+#form-controls button:disabled {
+  color: #ccc;
+  background-color: #f2f4f7;
+  border: none;
+}

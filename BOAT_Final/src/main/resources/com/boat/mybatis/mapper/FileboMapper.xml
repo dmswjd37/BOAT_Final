@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.boat.mybatis.mapper.FileboMapper">
+  
+  <select id ="getSearchList" resultType="Filebo">
+	  select * from 
+						(select b.*, rownum rnum from 
+							(select file_board.* , nvl(CNT ,0) CNT 
+							from file_board left outer join  
+							 				 (select FILE_BO_NUM,count(*) CNT 
+																from FILE_COMMENT 
+																group by FILE_BO_NUM
+																order by CNT desc) 
+																<!-- 댓글순 -->
+							on FILE_NUM = FILE_BO_NUM  
+						<where>
+						<if test = "searchsel !=null">
+							 <choose>
+								  <when test = "searchsel=='NAME'">
+									FILE_NAME like #{searchinput}  
+								  </when>
+								  <when test="searchsel=='TITLE'">
+								  FILE_SUBJECT like #{searchinput}
+								  </when>
+							 </choose>
+							 </if>
+							<if test = "dept !=null and dept !=''">
+								and dept =#{dept}
+							</if>
+							</where> 
+								<!-- 댓글순
+						 order by  FILE_RE_REF desc , FILE_RE_SEQ asc정렬
+						 order by FILE_DATE desc최신순
+						 order by FILE_READCOUNT desc조회순
+						 order by CNT desc댓글순
+						 -->
+						  <choose>
+							  <when test = "order == 'RECENT'">
+								  order by FILE_DATE desc
+								   </when>
+								  <when test = "order == 'READCOUNT'">
+								 order by FILE_READCOUNT desc
+								   </when>
+								  <when test = "order == 'COMMCOUNT'">
+								 order by CNT desc
+								   </when>
+							 </choose>
+							<!-- //endrow//최신순 -->
+					  	<![CDATA[	 )b 
+						where rownum<= #{end} ) 
+						
+						where rnum>=#{start}  and rnum<= #{end}  ]]>
+						
+						<!-- //startrow,endrow -->
+				  </select>
+				  
+				  
+		<select id="getSearchListCount" resultType = "int">
+		select count(*) 
+			from file_board 
+			<!-- 		where FILE_NAME like '%홍길동%'  
+			and dept = '홍보팀'
+							//FILE_NAME //FILE_SUBJECT
+	-->
+		<where>
+		<if test = "searchsel !=null">
+							 <choose>
+								  <when test = "searchsel=='NAME'">
+									FILE_NAME like #{searchinput}  
+								  </when>
+								  <when test="searchsel=='TITLE'">
+								  FILE_SUBJECT like #{searchinput}
+								  </when>
+							 </choose>
+							 </if>
+							<if test = "dept !=null and dept !=''">
+								and dept =#{dept}
+							</if>
+							</where> 
+		</select>
+  
+	 <select id="myFavListCount" resultType="int">
+	 	select count(*) from FILEBO_FAV 
+	 	where FIlE_EMPNO = #{EMPNO}
+	 </select>
+ 
+	  <select id="myFavList" resultType="Filebo">
+	  		 <![CDATA[
+	 SELECT * FROM (select rownum rnum, j.* from (
+							 select file_board.*, nvl(CNT ,0) CNT 
+							from file_board left outer join (select FILE_BO_NUM ,count(*) CNT  
+														from FILE_COMMENT  
+														group by  FILE_BO_NUM )b 
+												on file_board.FILE_NUM  = b.FILE_BO_NUM
+												where file_board.file_num in
+												(select file_num from FILEBO_FAV where file_empno = #{EMPNO})   
+							order by FILE_RE_REF  desc,  
+							FILE_RE_SEQ  asc)j
+							 				where rownum<= #{end}  ) 
+							WHERE rnum>=#{start}  and rnum<= #{end}  
+							 ]]>
+	  </select>
+  
+  
+  
+	  <insert id = "InsertFav">
+		
+			  insert into FILEBO_FAV (FILE_NUM,FIlE_EMPNO)
+			  values (#{FILE_NUM},#{FILE_EMPNO})
+	  </insert>
+  
+	    <delete id="deleteFav">
+		  	delete from FILEBO_FAV 
+		  	where FILE_NUM = #{FILE_NUM} 
+		  	and FIlE_EMPNO = #{FILE_EMPNO} 
+		</delete>
+  
+  
+  
+	<select id="getListCount" resultType="int">
+		select count(*) from file_board
+		
+	
+	</select>
+	
+	
+  	
+  <select id = "getBoardList" resultType="Filebo" parameterType="java.util.Map">
+  	
+  <!-- 	<selectkey  keyProperty ="star" resultType = 'Filebo' order ="after">
+  	SELECT LISTAGG(FILE_NUM, ',') WITHIN GROUP (ORDER BY FILE_NUM) AS star 
+FROM filebo_fav 
+WHERE FILE_EMPNO = #{FILE_EMPNO} 
+  	</selectkey> -->
+  	
+	 <![CDATA[
+	SELECT * FROM (
+    SELECT A.*, ROWNUM RN FROM (
+        SELECT file_board.*, NVL(cnt, 0) AS cnt, 
+               LISTAGG(fbf.FILE_EMPNO, ',') WITHIN GROUP
+                (ORDER BY fbf.FILE_EMPNO) AS star
+        FROM file_board 
+        LEFT OUTER JOIN (
+            SELECT FILE_BO_NUM, COUNT(*) AS cnt  
+            FROM FILE_COMMENT  
+            GROUP BY FILE_BO_NUM
+        ) c ON file_board.FILE_NUM = c.FILE_BO_NUM   
+        LEFT OUTER JOIN filebo_fav fbf ON file_board.FILE_NUM = fbf.FILE_NUM 
+         GROUP BY file_board.FILE_NUM, file_board.FILE_NAME,
+         file_board.FILE_SUBJECT, file_board.FILE_CONTENT,
+          file_board.FILE_PASS, 
+          file_board.FILE_FILE, 
+          file_board.FILE_FILE2, 
+          file_board.DEPT, 
+          file_board.FILE_ORIGINAL2, 
+          file_board.FILE_ORIGINAL, 
+          file_board.FILE_DATE, file_board.FILE_READCOUNT, 
+          file_board.FILE_RE_REF, file_board.FILE_RE_LEV, 
+          file_board.FILE_RE_SEQ, file_board.FILE_EMPNO,
+            cnt
+        ORDER BY file_board.FILE_RE_REF DESC, file_board.FILE_RE_SEQ ASC
+    ) A
+    WHERE ROWNUM <= #{end}
+) 
+WHERE RN >= #{start}
+							 ]]>
+  
+  </select>
+  
+  			 
+  <insert id = "insertBoard" parameterType = "Filebo">
+	  <selectKey resultType="int" order ="BEFORE" keyProperty ="FILE_NUM">
+	  	 select nvl(max(FILE_NUM ),0)+1 from file_board 
+	  
+	  </selectKey>
+	 	 insert into file_board 
+  (FILE_NUM ,FILE_NAME ,FILE_PASS ,FILE_SUBJECT ,
+  FILE_CONTENT ,FILE_FILE ,FILE_FILE2,FILE_ORIGINAL,FILE_ORIGINAL2,FILE_RE_REF ,
+  FILE_RE_LEV ,FILE_RE_SEQ ,FILE_READCOUNT ,FILE_DATE, DEPT,FILE_EMPNO)
+  values
+  (
+  #{FILE_NUM},#{FILE_NAME},#{FILE_PASS},#{FILE_SUBJECT},#{FILE_CONTENT},
+  #{FILE_FILE,jdbcType=VARCHAR},#{FILE_FILE2,jdbcType=VARCHAR},
+   #{FILE_ORIGINAL,jdbcType=VARCHAR},  #{FILE_ORIGINAL2,jdbcType=VARCHAR},
+  #{FILE_NUM},#{FILE_RE_LEV},#{FILE_RE_SEQ},#{FILE_READCOUNT},SYSDATE,#{DEPT},#{FILE_EMPNO})
+  </insert>
+  
+  <select id ="getDetail" parameterType ="Filebo" resultType = "Filebo">
+	select * from file_board  
+   where 
+  FILE_NUM = #{number}
+  </select>
+  
+  <update id="setReadCountUpdate" parameterType ="int">
+	update file_board
+  set FILE_READCOUNT  = FILE_READCOUNT +1
+  where FILE_NUM = #{number}
+  </update>
+  
+  <select id = "isBoardWriter" parameterType = "map" resultType="Filebo" >
+select * from file_board
+  where FILE_NUM=#{num}
+  and FILE_PASS=#{pass}
+  </select>
+  
+  <update id="boardModify" parameterType = "Filebo" >
+	update file_board
+  set
+  FILE_SUBJECT = #{FILE_SUBJECT},
+  FILE_CONTENT = #{FILE_CONTENT},
+  FILE_FILE  = #{FILE_FILE,jdbcType=VARCHAR},
+  FILE_FILE2  = #{FILE_FILE2,jdbcType=VARCHAR},
+  FILE_ORIGINAL = #{FILE_ORIGINAL,jdbcType=VARCHAR},
+  FILE_ORIGINAL2 = #{FILE_ORIGINAL2,jdbcType=VARCHAR}
+ where
+  FILE_NUM =#{FILE_NUM}
+  
+  </update>
+  
+  <insert id = "boardReply" parameterType = "Filebo">
+  	<selectKey resultType="int" order ="BEFORE" keyProperty ="FILE_NUM">
+  	</selectKey>
+ insert into file_board  
+					(FILE_NUM,FILE_NAME  ,FILE_PASS ,FILE_SUBJECT ,
+					FILE_CONTENT, FILE_RE_REF ,
+					FILE_RE_LEV , FILE_RE_SEQ , FILE_READCOUNT ,FILE_DATE ) 
+values( #{FILE_NUM},#{FILE_NAME },#{FILE_PASS },#{FILE_SUBJECT },#{FILE_CONTENT },
+					#{FILE_RE_REF },#{FILE_RE_LEV },#{FILE_RE_SEQ },#{FILE_READCOUNT },sysdate)
+  </insert>
+  
+  <update id = "boardReplyUpdate" parameterType = "Filebo">
+  	  update file_board  set FILE_RE_SEQ  = FILE_RE_SEQ +1 
+					where FILE_RE_REF  = #{FILE_RE_REF }
+					and FILE_RE_SEQ  <![CDATA[ > ]]> #{FILE_RE_SEQ }
+  </update>
+  
+  <delete id="boardDelete" parameterType = "int">
+ <![CDATA[
+  delete from file_board  
+			where FILE_RE_REF  = #{FILE_RE_REF} 
+			and FILE_RE_LEV   > =#{FILE_RE_LEV} 
+			and FILE_RE_SEQ   > =#{FILE_RE_SEQ} 
+			and FILE_RE_SEQ   < =(  
+							 		nvl((select min(FILE_RE_SEQ) -1 
+									  from file_board
+									  where FILE_RE_REF = #{FILE_RE_REF} 
+									  and FILE_RE_LEV = #{FILE_RE_LEV}
+									  and FILE_RE_SEQ  > #{FILE_RE_SEQ}),
+									(select max(FILE_RE_SEQ)
+								 		from file_board
+										 where FILE_RE_REF = #{FILE_RE_REF})))
+  ]]>
+  </delete>
+   <select id ="getDeleteFileList" resultType ="String"> 
+   select board_file from delete_file
+  </select>
+  
+  <delete id="deleteFileList" parameterType ="String">
+  delete from delete_file where board_file=#{filename}
+  </delete>
+  
+ </mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boat.mybatis.mapper.AttandanceMapper">
+
+
+	<select id="getAttList" resultType='Attandance'>
+		select * from BOAT_ATTENDANCE
+		where empno = #{empno}
+		<!--   and REG_DATE <![CDATA[<> ]]> TO_CHAR(SYSDATE, 'YYYYMMDD')-->
+		order by reg_date desc
+	</select>
+
+	<select id="getTodayMyatt" resultType='Attandance'>
+		select * from
+		BOAT_ATTENDANCE
+		where REG_DATE = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		and EMPNO = #{EMPNO}
+
+	</select>
+
+	<insert id="AttOn">
+		insert into BOAT_ATTENDANCE (empno, on_time,dept,
+		REG_DATE,name)
+		values(#{EMPNO},#{on},#{DEPT},TO_CHAR(SYSDATE, 'YYYYMMDD'),#{NAME})
+	</insert>
+
+	<update id="AttOff">
+		UPDATE BOAT_ATTENDANCE
+		SET off_time = #{OFF_TIME}
+		WHERE REG_DATE =
+		TO_CHAR(SYSDATE, 'YYYYMMDD')
+		and empno = #{EMPNO}
+		<selectKey resultType="String" keyProperty="ON_TIME"
+			order="AFTER">
+			SELECT ON_TIME FROM BOAT_ATTENDANCE
+			where reg_date = TO_CHAR(SYSDATE, 'YYYYMMDD')
+			and empno = #{EMPNO}
+		</selectKey>
+
+	</update>
+
+	<update id="Todayworktime">
+		UPDATE BOAT_ATTENDANCE
+		SET WORK_TIME = #{WORK_TIME}
+		WHERE REG_DATE =
+		TO_CHAR(SYSDATE, 'YYYYMMDD')
+		and empno = #{EMPNO}
+	</update>
+
+	<select id="thisweekwork" resultType="String">
+		  
+				  <![CDATA[
+		SELECT TRUNC(SUM(TO_NUMBER(TO_CHAR(TO_DATE(work_time, 'HH24:MI'), 'SSSSS')))/60) 
+		       || ':' || TO_CHAR(MOD(SUM(TO_NUMBER(TO_CHAR(TO_DATE(work_time, 'HH24:MI'), 'SSSSS'))), 60), 'FM00') 
+		       AS total_work_time
+		FROM boat_attendance
+		WHERE reg_date >= #{firstWeekDay} AND reg_date <= #{lastWeekDay}
+		and empno = #{EMPNO}
+				   ]]>
+	</select>
+</mapper>

@@ -1,0 +1,75 @@
+.float-right{float:right!important}
+
+
+body > section > div > table > thead > tr > th:nth-child(1) 
+{width: 6%;
+text-align : center;	}
+body > section > div > table > thead > tr > th:nth-child(2) {width: 20%}
+body > section > div > table > thead > tr > th:nth-child(3) {width: 8%}
+body > section > div > table > thead > tr > th:nth-child(4) {width: 6%}
+body > section > div > table > thead > tr > th:nth-child(5) {width: 8%}
+body > section > div > table > thead > tr > th:nth-child(6) {width: 6%}
+body > section > div > table > thead > tr > th:nth-child(7) {width: 6%}
+
+
+
+input[class='sharch']:focus{
+ outline: none;
+  width: 300px;
+  text-align: left;
+  border : none!important;}
+  
+  
+.searchimg {
+	width : 20px;
+}
+
+
+img {
+	width: 10px
+}
+.search{text-align:right}
+.btn-secondary {
+color: white;
+    background-color: #009CFF;
+    border-color: #009CFF;
+}
+.btn-secondary:focus ,.btn-secondary:active {
+    color: white;
+    background-color:  #009CFF;
+    border-color:  #009CFF;
+    box-shadow: 0 0 0 0;
+/*     box-shadow: 0 0 0 0.25rem rgba(101,101,101,0.5); */
+}
+.btn-secondary:hover {
+    color: white;
+    background-color: #009CFF;
+    border-color: #009CFF;
+}
+.btn-check:focus+.btn, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0;
+}
+#searhcbtn2{
+border : none;
+background-color: white;
+}
+
+.filebofooter{
+
+    display: flex!important;
+    justify-content: space-between;
+    
+}
+
+body > section > div > div > div{
+    padding-top: 1rem !important;
+}
+
+body > section > div > div > div > div:nth-child(4){
+    margin-left: 10px;
+}
+
+.invis{
+    display: none;
+}

@@ -1,0 +1,119 @@
+select * from file_board;
+
+delete from file_board
+
+drop table FILEBO_FAV cascade constraints purge;
+
+230406
+CREATE TABLE FILEBO_FAV (
+FILE_NUM NUMBER(5) NOT NULL,
+FIlE_EMPNO NUMBER(12) NOT NULL
+);
+ insert into filebo_fav values (1,'2330002',1);
+  select FILE_EMPNO from filebo_fav where FILE_NUM =1;
+  
+  
+  
+230406
+alter table file_board modify file_empno varchar2(12);
+drop table file_board cascade constraints purge;
+
+	create table file_board (
+	FILE_NUM NUMBER(5) primary key,
+	FILE_NAME VARCHAR2(30), 
+	FILE_PASS NUMBER(30),
+	FILE_SUBJECT VARCHAR2(300),	
+	FILE_CONTENT VARCHAR2(4000),		
+	FILE_FILE VARCHAR2(100),
+	FILE_FILE2 VARCHAR2(100),		
+	FILE_RE_REF NUMBER(5),	
+	FILE_RE_LEV NUMBER(5),	
+	FILE_RE_SEQ NUMBER(5),
+	FILE_READCOUNT NUMBER(5),
+	FILE_ORIGINAL VARCHAR2(100),	
+	FILE_ORIGINAL2 VARCHAR2(100),	
+	FILE_DATE DATE ,
+	DEPT VARCHAR2(30) check (dept in ('홍보팀', '개발팀', '인사팀', '기획팀', '영업팀')),
+	FIlE_EMPNO varchar2(12)
+	);
+	 select * from 
+				(select b.*, rownum rnum from 
+					(select file_board.* , nvl(CNT ,0)  CNT
+					from file_board left outer join  
+					 				(select F_COMMENT_NUM ,count(*) CNT from FILE_COMMENT group by F_COMMENT_NUM 
+									order by  CNT desc) 
+					on FILE_NUM = F_COMMENT_NUM 
+					where dept = '홍보팀'
+					and FILE_NAME = '홍길동' 
+				order by FILE_RE_REF desc 
+				, FILE_READCOUNT desc )b 
+				where rownum<=10 )
+				where rnum>=1 and rnum<=10;
+				
+				
+				select count(*) 
+								from file_board 
+								where 
+				 					FILE_NAME like %홍길동%  
+									and dept = '홍보팀';
+	===================================================================
+	  SELECT * FROM (select rownum rnum, j.* from (
+							 select file_board.*, nvl(CNT ,0) CNT 
+							from board3 left outer join (select board_num,count(*) CNT  
+														from comments3 
+														group by board_num)b 
+												on board3.board_num = b.board_num  
+							order by board_re_ref desc,  
+							board_re_seq asc)j
+							 				where rownum&lt;=  #{end}   ) 
+							WHERE rnum&gt;= #{start}  and rnum&lt;= #{end}  
+							
+							
+							
+		SELECT * FROM (select rownum rnum, j.* from ( 
+											 select file_board.*, nvl(CNT ,0) CNT 
+											from file_board left outer join (select F_C_NUM,count(*) CNT  
+																		from Filecomm 
+																		group by F_C_NUM)b 
+														on file_board.FILE_NUM = b.F_BO_NUM 
+														order by FILE_RE_REF desc, 
+														FILE_RE_SEQ asc)j 
+						where rownum<=10 ) 
+	WHERE rnum>=0 and rnum<=10;
+	
+
+	
+	
+	
+	
+	
+	  select * from "
+						(select b.*, rownum rnum from 
+							(select file_board.* , nvl(CNT ,0) CNT 
+							from file_board left outer join  
+							 				 (select F_COMMENT_NUM,count(*) CNT 
+																from FILE_COMMENT 
+																group by F_COMMENT_NUM
+																order by CNT desc) //댓글순
+							on FILE_NUM = F_COMMENT_NUM 
+							<where>
+							//FILE_NAME //FILE_SUBJECT
+							search + " like ? " 
+								dept = ""
+						"+order+" )b 
+						조회수
+						where rownum<= ? ) 
+						 order by  FILE_RE_REF desc , FILE_RE_SEQ asc정렬
+						 order by FILE_DATE desc최신순
+						 order by FILE_READCOUNT desc조회순
+						 order by CNT desc댓글순
+						//endrow//최신순
+						where rnum>= ? and rnum<= ? 
+					
+					//startrow,endrow
+		
+	
+	
+	
+	
+	

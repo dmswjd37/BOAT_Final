@@ -1,0 +1,152 @@
+.text-primary {
+	padding-top: 70px;
+	margin-bottom: 45px;
+}
+
+.join_2022_box {
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 60px;
+    max-width: 800px;
+    border: 1px solid #e5e5e5;
+    padding-left: 80px;
+    padding-right: 80px;
+    width: 962px;
+    
+}
+
+.join_2022_wrap {
+    display: flex;
+    font-size: 14px;
+    justify-content: center;
+    padding: 20px 0 20px;
+}
+
+.page_title {
+      text-align: center;
+      font-weight: normal;
+      line-height: 1;
+      letter-spacing: -1.5px;
+      font-size: 38px;
+}
+
+.login_info_wrap {
+    margin-top: 50px;
+}
+
+@media only screen and (min-width: 768px){
+	.sub_title {
+	    display: block;
+	    font-size: 1.3em;
+	    line-height: 1.5;
+	}
+	.policy_agree_wrap .sub_title {
+		margin-top: 50px;
+	}
+	.head  {
+	    font-size: 16px;
+	    color: black;
+	}
+	._input {
+	    height: 60px;
+	    width: 100%;
+	    font-size: 1rem;
+	    border: none;
+	    outline: none;
+	    border-bottom: 1px solid #cdcdcd;
+	}
+	.checkbox_wrap {
+	    font-size: 16px;
+	    display: inline-flex;
+	    align-items: center;
+	    color: black;
+	}
+	._checkbox {
+	    width: 18px;
+	    height: 18px;
+	    margin-right: 8px;
+	    cursor: pointer;
+	}
+}
+.essential {
+    color: #3090d6;
+    margin-left: 5px;
+}
+.no_child {
+    font-size: 14px;
+    color: #999;
+    margin-top: 10px;
+    font-weight: 300;
+}
+.fa-eye:before{content:"\f06e"}.fa-eye-slash:before{content:"\f070"}
+
+.row-container .fa-eye, .row-container .fa-eye-slash{
+    position: absolute;
+    left: 90%;
+    top: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(184, 184, 184);
+}
+.bF7skra2CCu8uPGJJ3Jw {
+    position: relative;
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    border: 0;
+    background: none;
+    margin-bottom: 20px;
+}
+.g68VV5Ghc0ymGpbFWhEx {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 36px;
+    height: 36px;
+}
+.profile {
+	width:fit-content;
+    margin:auto;
+}
+._input:focus {
+	border-color: #009CFF;
+}
+::placeholder {
+    color: #C0C7DB;
+    font-size: 1rem;
+    letter-spacing: 1.2px;
+}
+.body {
+    position: relative;
+}
+.row:nth-of-type(1) {
+    margin-top: 20px;
+}
+
+.head + .body {
+	margin-bottom: 5px;
+}
+.head + .body select {
+	height: 50px;
+	border: none;
+	border-bottom: 1px solid #cdcdcd;
+	border-radius: 0px;
+	padding-left: 2px;
+}
+
+.body select:focus {
+	outline: none;
+	border-color: #009CFF;
+	box-shadow: none;
+}
+
+/* disabled 의사 클래스를 이용해 비활성화 상태의 버튼 스타일 설정 */
+#form-controls button:disabled {
+  color: #ccc;
+  background-color: #f2f4f7;
+  border: none;
+}
+
+.invalid-feedback {
+	padding-left: 180px;
+}

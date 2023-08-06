@@ -1,0 +1,101 @@
+	label { font-weight:bold}
+  	.containers{
+  		margin-top:270px;
+  		background:#F5F7FF;
+  		padding-bottom: 150px;
+  		padding-top: 50px;
+  	}
+  	* {
+	  box-sizing: border-box;
+	}
+	body{
+	    margin: 0;
+	}
+	.container{
+		width:60%;
+		margin: auto;
+		margin-top: 50px;
+  		border-radius: 10px;
+	 	padding: 50px;
+  		background: white;
+	 	
+	}
+	input[type=text],input[type=password], select {
+	  width: 100%;
+	  padding: 12px;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  resize: vertical;
+	  margin-bottom: 16px;
+	}
+	
+	label {
+	  padding: 12px 12px 12px 0;
+	  display: inline-block;
+	}
+	
+	input[type=submit] {
+	  background-color: #1e62ff;
+	  color: white;
+	  padding: 16px 20px;
+	  border: none;
+	  cursor: pointer;
+	  width: 20%;
+	  margin-top:20px;
+	  margin-bottom:10px;
+	  opacity: 0.8;
+	  display: inline-block;
+	}
+	
+	input[type=reset] {
+	  background-color: red;
+	  color: white;
+	  padding: 16px 20px;
+	  border: none;
+	  cursor: pointer;
+	  width: 20%;
+	  margin-top:20px;
+	  margin-bottom:10px;
+	  opacity: 0.8;
+	  display: inline-block;
+	}
+	
+	input[type=submit]:hover, input[type=reset]:hover {
+	  opacity: 1;
+	}
+	.col-25 {
+	  float: left;
+	  width: 10%;
+	  margin: 6px 0px 0px 20px;
+	}
+	
+	.col-75 {
+	  float: left;
+	  width: 85%;
+	  margin-top: 6px;
+	}
+	
+	/* Clear floats after the columns */
+	.row:after {
+	  content: "";
+	  display: table;
+	  clear: both;
+	}
+	
+	/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+	@media screen and (max-width: 1000px) {
+	  .col-25, .col-75, input[type=submit] {
+	    width: 100%;
+	    margin-top: 0;
+	  }
+	}
+	.note-editable p{
+		text-align: left;
+	}
+	.row2{
+		text-align: center;
+	}
+	.row{
+		margin-bottom:16px
+	}
+	h1{ font-size: 1.5rem; text-align: center; color:black;}

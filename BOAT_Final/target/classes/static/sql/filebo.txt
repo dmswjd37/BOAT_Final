@@ -1,0 +1,32 @@
+
+drop table FILEBO_FAV cascade constraints purge;
+
+230406
+CREATE TABLE FILEBO_FAV (
+FILE_NUM NUMBER(5) NOT NULL,
+FIlE_EMPNO NUMBER(12) NOT NULL
+);
+
+  
+  
+  
+drop table file_board cascade constraints purge;
+
+	create table file_board (
+	FILE_NUM NUMBER(5) primary key,
+	FILE_NAME VARCHAR2(30), 
+	FILE_PASS NUMBER(30),
+	FILE_SUBJECT VARCHAR2(300),	
+	FILE_CONTENT VARCHAR2(4000),		
+	FILE_FILE VARCHAR2(100),
+	FILE_FILE2 VARCHAR2(100),		
+	FILE_RE_REF NUMBER(5),	
+	FILE_RE_LEV NUMBER(5),	
+	FILE_RE_SEQ NUMBER(5),
+	FILE_READCOUNT NUMBER(5),
+	FILE_ORIGINAL VARCHAR2(100),	
+	FILE_ORIGINAL2 VARCHAR2(100),	
+	FILE_DATE DATE ,
+	DEPT VARCHAR2(30) check (dept in ('홍보팀', '개발팀', '인사팀', '기획팀', '영업팀')),
+	FIlE_EMPNO varchar2(12)
+	);

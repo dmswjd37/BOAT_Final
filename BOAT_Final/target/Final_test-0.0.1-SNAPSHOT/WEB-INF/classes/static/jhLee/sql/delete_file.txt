@@ -1,0 +1,24 @@
+drop table delete_file purge;
+
+
+create table delete_file3(
+board_file varchar2(50),
+reg_date date default sysdate);
+
+
+
+CREATE OR REPLACE TRIGGER save_delete_file3
+AFTER UPDATE OR DELETE
+ON BOARD3
+
+FOR EACH ROW 
+BEGIN
+	IF (:OLD.BOARD_FILE IS NOT NULL) THEN
+		IF(:OLD.BOARD_FILE !=:NEW.BOARD_FILE OR :NEW.BOARD_FILE IS NULL) THEN
+		INSERT INTO DELETE_FILE3
+		(BOARD_FILE)
+		VALUES(:OLD.BOARD_FILE);
+		END IF;
+	END IF;
+END;
+/

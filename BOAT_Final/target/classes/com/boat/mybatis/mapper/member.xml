@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boat.mybatis.mapper.MemberMapper">
+
+	<select id="naverConnectionCheck" resultType="java.util.Map">
+		SELECT * FROM MEMBER 
+		WHERE EMAIL = #{email}
+		AND NAVERLOGIN = #{id}
+	</select>
+
+	<select id="userNaverLoginPro" resultType="java.util.Map">
+		SELECT * FROM MEMBER 
+		WHERE EMAIL = #{email} 
+		AND NAVERLOGIN = #{id}
+	</select>
+
+	<update id="setNaverConnection">
+		UPDATE MEMBER SET NAVERLOGIN = #{id} WHERE EMAIL = #{email}
+	</update>
+
+	<!-- 사원번호 생성하기 위해 조회 -->
+	<select id="isEmpno" resultType="member">
+		SELECT * FROM (
+			SELECT * FROM MEMBER
+			WHERE DEPT = #{select}
+			ORDER BY REGISTER_DATE DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO MEMBER
+		(EMPNO, DEPT, JOB, PASSWORD, PASSWORD_OG, NAME, EMAIL, 
+		PROFILE_FILE, PROFILE_IMG, REGISTER_DATE, AUTH, NAVERLOGIN , GOOGLELOGIN)
+		VALUES
+		(#{EMPNO}, #{DEPT}, #{JOB}, #{PASSWORD}, #{PASSWORD_OG}, #{NAME}, #{EMAIL}, 
+		#{PROFILE_FILE}, #{PROFILE_IMG}, SYSDATE, #{AUTH}, NULL, NULL)
+	</insert>
+
+	<select id="isId" resultType="member">
+		SELECT * FROM MEMBER
+		WHERE EMPNO = #{empno}
+	</select>
+	
+	<insert id="userNaverRegisterPro">
+		INSERT INTO MEMBER 
+		(EMPNO, DEPT, JOB, PASSWORD, PASSWORD_OG, NAME, EMAIL, 
+		PROFILE_FILE, PROFILE_IMG, REGISTER_DATE, AUTH, NAVERLOGIN , GOOGLELOGIN)
+		VALUES (#{EMPNO}, #{DEPT}, '사원', #{PASSWORD}, #{PASSWORD_OG}, #{NAME}, #{EMAIL},
+		#{PROFILE_FILE}, #{PROFILE_IMG}, SYSDATE, 'ROLE_MEMBER', #{id}, NULL)
+	</insert>
+
+	<select id="GoogleConnectionCheck" resultType="java.util.Map">
+		SELECT * FROM MEMBER 
+		WHERE EMAIL = #{email}
+		AND GOOGLELOGIN = #{id}
+	</select>
+
+	<select id="userGoogleLoginPro" resultType="java.util.Map">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND GOOGLELOGIN = #{id}
+	</select>
+	
+	<insert id="userGoogleRegisterPro">
+		INSERT INTO MEMBER 
+		(EMPNO, DEPT, JOB, PASSWORD, PASSWORD_OG, NAME, EMAIL, 
+		PROFILE_FILE, PROFILE_IMG, REGISTER_DATE, AUTH, NAVERLOGIN , GOOGLELOGIN)
+		VALUES (#{EMPNO}, #{DEPT}, '사원', #{PASSWORD}, #{PASSWORD_OG}, #{NAME}, #{EMAIL},
+		#{PROFILE_FILE}, #{PROFILE_IMG}, SYSDATE, 'ROLE_MEMBER', NULL, #{id})
+	</insert>
+	
+	<select id="getidlist" resultType="java.util.Map">
+		SELECT * FROM MEMBER 
+		WHERE NAME = #{name}
+		AND EMAIL = #{email}
+	</select>
+	
+	<select id="getPassword" resultType="member">
+		SELECT * FROM MEMBER
+		WHERE NAME = #{name}
+		AND EMPNO = #{empno}
+		AND EMAIL = #{email}
+	</select>
+	
+	<update id="pwdupdate">
+		update MEMBER
+		set PASSWORD = #{encPassword}, PASSWORD_OG = #{password}
+		where EMPNO = #{empno}
+	</update>
+	
+	<update id="update">
+		update MEMBER
+		set DEPT = #{DEPT}, PASSWORD = #{PASSWORD}, PASSWORD_OG = #{PASSWORD_OG}, NAME = #{NAME}, 
+			PROFILE_FILE = #{PROFILE_FILE}, PROFILE_IMG = #{PROFILE_IMG}
+		where EMPNO = #{EMPNO}
+	</update>
+	
+	<delete id="delete">
+		delete from MEMBER 
+		where EMPNO = #{empno}
+	</delete>
+	
+	<select id="getMyListCount" resultType="int">
+		select count(*) from BOARD
+		WHERE BOARD_EMPNO = #{empno}
+	</select>
+	
+	<select id="getMyBoardList" resultType="java.util.Map">
+		SELECT * FROM (
+			SELECT rownum rnum, J.* FROM(
+				SELECT * FROM(
+					SELECT b.BOARD_NUM, b.BOARD_SUBJECT, b.BOARD_DEPT, b.BOARD_NAME, b.BOARD_READCOUNT, b.BOARD_DATE, b.BOARD_NOTICE, NVL(CNT, 0) AS CNT  
+					FROM BOARD b LEFT OUTER JOIN  (SELECT board_num, COUNT(*) AS cnt FROM comments
+											GROUP BY board_num) c
+					ON b.BOARD_NUM = c.board_num
+					where BOARD_EMPNO = #{empno}
+						UNION ALL
+					SELECT FILE_NUM, FILE_SUBJECT, DEPT, FILE_NAME, FILE_READCOUNT, FILE_DATE, FILE_FILE, NVL(CNT, 0) AS CNT
+					FROM file_board  LEFT OUTER JOIN (SELECT FILE_BO_NUM, COUNT(*) CNT FROM FILE_COMMENT
+											GROUP BY FILE_BO_NUM)
+					ON FILE_NUM = FILE_BO_NUM
+					where FIlE_EMPNO = #{empno}
+						UNION ALL
+					SELECT num, subject, dept, name, NULL, reg_date, NULL, NULL
+					FROM workboard
+					where empno = #{empno}
+				)
+				ORDER BY BOARD_DATE DESC
+			) J
+			where rownum &lt;= #{end}
+		)
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="getMemberList" resultType="java.util.Map">
+		select * from MEMBER
+		WHERE EMPNO = #{empno}
+	</select>
+	
+	<select id="selectUserList" resultType="member">
+		SELECT * FROM MEMBER 
+		ORDER BY EMPNO
+	</select>
+	
+	<select id="getAddressLcount" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<select id="getAddressList" resultType="member">
+	select * from
+		(select rownum rnum, b.* from
+		 (select * from
+		  member) b
+			where rownum &lt;= #{end}
+		)
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	
+	<select id="getOptionListCount" resultType="int">
+		select count(*) from member
+		<where>
+    	<if test="dept != null and dept != ''">
+      	and dept = #{dept}
+    	</if>
+  		</where>
+	</select>
+	
+	<select id="getOptionAddressList" resultType="member">
+	select * from
+		(select rownum rnum, b.* from
+		 (select * from
+		  member
+		 <where>
+        <if test="dept != null and dept != ''">
+          AND dept = #{dept}
+        </if>
+      </where>
+		  ) b
+			where rownum &lt;= #{end}
+		)
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+
+	<update id="update_admin">
+	    UPDATE MEMBER
+	    <set>
+	        <if test="DEPT != null"> DEPT = #{DEPT}, </if>
+	        <if test="PASSWORD != null"> PASSWORD = #{PASSWORD}, </if>
+	        <if test="PASSWORD_OG != null"> PASSWORD_OG = #{PASSWORD_OG}, </if>
+	        <if test="NAME != null"> NAME = #{NAME}, </if>
+	        <if test="PROFILE_FILE != null and PROFILE_FILE != ''"> PROFILE_FILE = #{PROFILE_FILE}, </if>
+	        <if test="PROFILE_IMG != null and PROFILE_IMG != ''"> PROFILE_IMG = #{PROFILE_IMG}, </if>
+	        <if test="AUTH != null and AUTH !=''"> AUTH = #{AUTH},</if>
+	        <if test="JOB != null and JOB !=''"> JOB = #{JOB},</if>
+	    </set>
+	    WHERE EMPNO = #{EMPNO}
+	</update>
+
+</mapper>

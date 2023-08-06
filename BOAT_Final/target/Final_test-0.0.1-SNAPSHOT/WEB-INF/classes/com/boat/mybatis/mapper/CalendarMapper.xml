@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.boat.mybatis.mapper.CalendarMapper">
+  
+  <select id="getEvent" resultType="Calendar">
+  	select * 	from BOAT_CALENDAR 
+		where SCHEDULE_CODE = #{SCHEDULE_CODE}
+  </select>
+  
+  <insert id="calInsert">
+	   insert into boat_calendar (
+	  	 SCHEDULE_CODE , EVENT_NAME, START_DATE, END_DATE, 
+	   	ALLDAY, DEPT, COLOR,EMPNO
+	   	)
+	   values
+	    (cal_seq.nextval,#{EVENT_NAME},
+		 #{START_DATE},#{END_DATE},#{ALLDAY},#{DEPT},#{COLOR},#{EMPNO}) 
+		<selectKey resultType="integer" keyProperty="SCHEDULE_CODE" order="AFTER">
+		SELECT max(TO_NUMBER(SCHEDULE_CODE)) FROM BOAT_CALENDAR
+		</selectKey>
+
+  </insert>
+  
+  <select id="getEventsByDept" resultType="Calendar">
+  SELECT * FROM boat_calendar WHERE DEPT = #{DEPT}
+  </select>
+  
+  <select id="getAllEvents" resultType="Calendar">
+  SELECT * FROM boat_calendar
+  </select>
+		  
+  <select id ='getcheckEvent' resultType="Calendar">
+	select * from boat_calendar
+	where empno =#{EMPNO}
+	and EVENT_NAME = #{EVENT_NAME}	  
+  </select>
+  
+  <delete id= "caldelete">
+  	delete from boat_calendar where empno =#{EMPNO}
+  	and EVENT_NAME =#{EVENT_NAME}
+  </delete>
+  
+  </mapper>

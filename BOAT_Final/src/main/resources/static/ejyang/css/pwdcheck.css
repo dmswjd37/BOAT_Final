@@ -1,0 +1,165 @@
+#form-container {
+	padding: 70px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+#form-inner-container {
+    background-color: white;
+    max-width: 70%;
+    border-radius: 8px;
+}
+
+#sign-up-container {
+    width: 400px;
+    display: inline-block;
+    position: relative;
+}
+
+form input:focus {
+    border-color: #009CFF;
+}
+
+#sign-up-container h3 {
+    font-size: 40px;
+    font-weight: 500;
+    text-align:center;
+    margin-bottom: 60px;
+}
+
+::placeholder {
+    color: #C0C7DB;
+    font-size: 1rem;
+    letter-spacing: 1.2px;
+}
+
+@media(max-width:1124px) {
+    #form-inner-container{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+._input {
+	font-size: 16px;
+    height: 60px;
+    width: 100%;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.multi_column {
+	position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.column_wrap {
+	border-bottom: 1px solid #cdcdcd;
+	display: flex;
+    position: relative;
+    flex-grow: 1;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.column_wrap:focus-within, .multi_column:focus-within {
+    border-color: #009CFF;
+}
+
+.column_wrap .focusInteraction {
+	border: none;
+	font-size: 16px;
+    height: 60px;
+    outline: none;
+}
+
+@media only screen and (min-width: 768px){
+	.multi_column {
+	    flex-direction: row;
+	}
+}
+
+.borders {
+    margin-bottom: 0;
+    display: flex;
+    position: relative;
+    flex-grow: 1;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.borders ._input {
+    font-size: 16px;
+    height: 60px;
+    width: 100%;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+}
+
+.icon_input {
+    position: absolute;
+    top: calc(50% - 10px);
+    display: flex;
+    gap: 5px;
+    text-align: center;
+}
+
+.column_wrap .limit_time {
+    height: 60px;
+    color: #009CFF;
+    letter-spacing: 0.1px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.button_wrap {
+    display: flex;
+    align-items: center;
+    height: 61px;
+}
+
+.button {
+    width: auto;
+    display: block;
+    color: white;
+    background: #009CFF;
+    height: 40px;
+    text-align: center;
+    min-width: 110px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    font-weight: bold;
+}
+
+.find-userinfo__btn_text {
+    margin-top: 30px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.find-userinfo__btn_text > a {
+    font-size: 16px;
+    display: inline-block;
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.find-userinfo__btn_text > a:hover {
+    color: #009CFF;
+}
+
+#form-controls button:disabled {
+  color: #ccc;
+  background-color: #f2f4f7;
+  border: none;
+}

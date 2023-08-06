@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boat.mybatis.mapper.ChatMessageMapper">
+
+	<insert id="messageinsert">
+		INSERT INTO CHAT_MESSAGE 
+		(SENDER, RECEIVER, CONTENT, CHAT_TIME, CHAT_DATE)
+		VALUES (#{id}, #{uuid}, #{content}, #{formattedDate}, SYSDATE)
+	</insert>
+
+	<select id="getChatHistory" resultType="ChatMessage">
+		SELECT * FROM(
+			SELECT * FROM CHAT_MESSAGE 
+			WHERE SENDER = #{id}
+			AND RECEIVER = #{uuid}
+				UNION ALL
+			SELECT * FROM CHAT_MESSAGE 
+			WHERE SENDER = #{uuid}
+			AND RECEIVER = #{id}
+		)
+		ORDER BY CHAT_DATE
+	</select>
+	
+</mapper>

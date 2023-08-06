@@ -1,0 +1,36 @@
+
+--calendar sql
+	--테이블 정의서 Number, E_NAME, START_DATE, END_DATE, ALLDAY
+	drop table boat_Calendar cascade constraints purge;
+	
+	drop sequence cal_seq;
+	
+create sequence cal_seq nocache;
+alter table boat_Calendar add startt VARCHAR2(60);
+alter table boat_Calendar add endd VARCHAR2(60);
+
+
+create table boat_Calendar (
+schedule_code varchar2 (500) primary key,
+event_name varchar2 (55),
+start_date varchar2  (55),
+end_date varchar2	 (55),
+allday varchar2(10), --check (allday  in('true','false')),
+empno varchar2(20),
+color varchar2(20),
+DEPT varchar2(15) CHECK (DEPT IN('홍보팀','개발팀','인사팀','기획팀','영업팀','개인일정','관리자'))
+);
+
+alter table boat_calendar add dept varchar2(15); 
+ alter table boat_calendar add color varchar2(20);
+ 
+ 
+ insert into boat_calendar values(cal_seq.nextval,'첫번째이벤트','2023-03-21 09:00:00',
+ '2023-04-21 12:00:00','true',null,'pink');
+ 
+delete from boat_Calendar;
+
+select * from boat_Calendar;
+
+
+	

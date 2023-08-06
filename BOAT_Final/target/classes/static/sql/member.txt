@@ -1,0 +1,38 @@
+DROP TABLE MEMBER CASCADE CONSTRAINTS PURGE;
+
+CREATE TABLE MEMBER(
+	EMPNO VARCHAR2(12),
+	DEPT VARCHAR2(10),
+	CONSTRAINT BOAT_DEPT_CK CHECK (DEPT IN('홍보팀','개발팀','인사팀','기획팀','영업팀')),
+	JOB VARCHAR2(20) DEFAULT '사원',
+	PASSWORD VARCHAR2(60),
+	PASSWORD_OG VARCHAR2(60),
+	NAME VARCHAR2(15),
+	EMAIL VARCHAR2(30),
+	PROFILE_FILE VARCHAR2(50), --프로필 사진 경로 ex)C:\Users\admin\git\Boat_Final\Final_test\src\main\resources\static\profile
+								--static => profile => 가입 날짜 => 사진
+								--<img src="profile/2023-3-26/2310004.png">
+	PROFILE_IMG VARCHAR2(50),
+	REGISTER_DATE DATE DEFAULT SYSDATE,
+	AUTH VARCHAR2(50) DEFAULT 'ROLE_MEMBER' NOT NULL,
+	NAVERLOGIN VARCHAR2(50),
+	GOOGLELOGIN VARCHAR2(50),
+	PRIMARY KEY(EMPNO)
+);
+
+	PWCHECK VARCHAR2(60),--비밀번호 확인 테이블 제외
+	--ROLE_MEMBER , ROLE_MGR , ROLE_ADMIN
+
+alter table member add PASSWORD_OG VARCHAR2(60);
+alter table member add GOOGLELOGIN VARCHAR2(50);
+
+
+SELECT*FROM MEMBER;
+
+INSERT INTO MEMBER 
+VALUES('ADMIN', '인사팀', '부서장','123456', '홍길동','admin@boat.com',
+'adminImage.png','adminImage.png', SYSDATE, 'ROLE_MEMBER', null);
+
+INSERT INTO MEMBER 
+VALUES('2330001', '인사팀', '부서장','123456', '홍길동','admin2@boat.com',
+'adminImage2.png', SYSDATE, 'ROLE_MEMBER', null);
