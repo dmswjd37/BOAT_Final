@@ -33,6 +33,7 @@ https://flawless-headlight-ae2.notion.site/BOAT-Final-Project-_-038043fa6ab24a4a
 ## 📺 시연 영상
 https://www.youtube.com/watch?v=84DwouCDwpg<br/>
 [![Video Label](http://img.youtube.com/vi/84DwouCDwpg/0.jpg)](https://youtu.be/84DwouCDwpg) 
+<br/><br/>
 ## 🔖 프로젝트 배포
 - ORACLE Cloud에 배포
 
