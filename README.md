@@ -36,6 +36,7 @@ https://www.youtube.com/watch?v=84DwouCDwpg<br/>
 <br/><br/>
 ## 🔖 프로젝트 배포
 - ORACLE Cloud에 배포
+- 주소 : http://144.24.78.220:8080/BOAT/index (TEST ID : 2310001, TEST PW : 123456)
 
   
 ![보트메인](https://github.com/dmswjd37/BOAT_Final/assets/115202586/fbde310f-4b2e-4540-b1fd-6e1fcb29f9e5)
