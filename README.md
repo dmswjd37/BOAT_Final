@@ -27,7 +27,7 @@
 - 회원간 채팅 기능
 - DB 설계 및 관리
 <br/><br/>
-## 📑 보고서
+## 📑 기획 및 설계 보고서
 https://flawless-headlight-ae2.notion.site/BOAT-Final-Project-_-038043fa6ab24a4a9fe5ee3d681fc395?pvs=4
 <br/><br/>
 ## 📺 시연 영상
